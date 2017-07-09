@@ -4,6 +4,9 @@
 @interface CCUIControlCenterPushButton : CCUIControlCenterButton
 @end
 
+@interface _FSSwitchButton : UIButton
+@end
+
 %group all
 %hook _FSSwitchButton
 -(void)layoutSubviews {
@@ -13,15 +16,31 @@
 	if (backgroundView != nil)
 		[backgroundView setHidden:YES];
 }
+
+-(void)_setBackgroundColor:(id)arg1 {
+	%orig(nil);
+}
+
+-(id)_backgroundColor {
+	return nil;
+}
 %end
 
-%hook CCUIControlCenterPushButton
+%hook CCUIControlCenterButton
 -(void)layoutSubviews {
 	%orig();
 	
 	UIView *_backgroundFlatColorView = MSHookIvar<UIView *>(self, "_backgroundFlatColorView");
 	if (_backgroundFlatColorView != nil)
 		[_backgroundFlatColorView setHidden:YES];
+}
+
+-(void)_setBackgroundColor:(id)arg1 {
+	%orig(nil);
+}
+
+-(id)_backgroundColor {
+	return nil;
 }
 %end
 %end
@@ -39,6 +58,14 @@
 	%orig();
 
 	[[self maskingMaterialView] setHidden:YES];
+}
+
+-(void)_setBackgroundColor:(id)arg1 {
+	%orig(nil);
+}
+
+-(id)_backgroundColor {
+	return nil;
 }
 %end
 %end
