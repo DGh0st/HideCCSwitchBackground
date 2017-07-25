@@ -60,6 +60,14 @@ typedef enum {
 	return nil;
 }
 %end
+
+%hook MPUEmptyNowPlayingView
+
+- (void)setBackgroundColor:(UIColor *)arg1 {
+	%orig([UIColor clearColor]);
+}
+
+%end
 %end
 
 %group polus
