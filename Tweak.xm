@@ -62,11 +62,13 @@ typedef enum {
 %end
 
 %hook MPUEmptyNowPlayingView
-
-- (void)setBackgroundColor:(UIColor *)arg1 {
-	%orig([UIColor clearColor]);
+-(void)setBackgroundColor:(id)arg1 {
+	%orig(nil);
 }
 
+-(id)backgroundColor {
+	return nil;
+}
 %end
 %end
 
@@ -166,6 +168,21 @@ typedef enum {
 		}
 	}
 	return result;
+}
+
+-(CGColorRef)backgroundColor {
+	CGColorRef result = %orig();
+	if (self.delegate != nil && [[self.delegate class] isEqual:%c(MPUEmptyNowPlayingView)])
+		if (CFPreferencesGetAppBooleanValue((CFStringRef)@"LQDDarkModeEnabled", CFSTR("com.laughingquoll.noctis"), NULL))
+			result = [UIColor clearColor].CGColor;
+	return result;
+}
+
+-(void)setBackgroundColor:(CGColorRef)arg1 {
+	if (self.delegate != nil && [[self.delegate class] isEqual:%c(MPUEmptyNowPlayingView)])
+		if (CFPreferencesGetAppBooleanValue((CFStringRef)@"LQDDarkModeEnabled", CFSTR("com.laughingquoll.noctis"), NULL))
+			arg1 = [UIColor clearColor].CGColor;
+	%orig(arg1);
 }
 %end
 %end

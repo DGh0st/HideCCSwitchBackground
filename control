@@ -1,7 +1,7 @@
 Package: com.dgh0st.hideccswitchbackground
 Name: HideCCSwitchBackground
 Depends: mobilesubstrate
-Version: 0.0.5
+Version: 0.0.6
 Architecture: iphoneos-arm
 Description: Hide the background of CC switches
 Maintainer: DGh0st <deeppwnage@yahoo.com>
